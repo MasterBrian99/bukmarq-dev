@@ -1,9 +1,27 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      ignoreEnvFile: process.env.NODE_ENV != 'development',
+      isGlobal: true,
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'better-sqlite3',
+        database: configService.get<string>('DATABASE_NAME'),
+        entities: [__dirname + '/entity/*.entity{.ts,.js}'],
+        synchronize: configService.get<number>('SYNC_MODE') == 1,
+      }),
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
