@@ -1,0 +1,6 @@
+{
+    "ignore": [
+        "*bukmarq_db",
+        "**/fixtures/**"
+    ]
+}
