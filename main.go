@@ -18,7 +18,7 @@ func main() {
 }
 func loadDatabase() {
 	database.Connect()
-	err := database.Database.AutoMigrate(&model.User{})
+	err := database.Database.AutoMigrate(&model.User{}, &model.BookmarkFolder{})
 	if err != nil {
 		log.Fatal("Database Migration Failed !")
 	}
@@ -32,7 +32,13 @@ func serveApplication() {
 	{
 		auth.POST("/", controller.Register)
 		auth.POST("/login", controller.Login)
-		auth.GET("/test", middleware.JWTAuthMiddleware(), controller.Login)
+		auth.GET("/test", middleware.JWTAuthMiddleware(), controller.TestAuthentication)
+	}
+
+	fContent := routes.Group("/folder")
+	{
+		fContent.GET("/list", middleware.JWTAuthMiddleware(), controller.GetFolderList)
+		fContent.POST("/", middleware.JWTAuthMiddleware(), controller.CreateFolder)
 	}
 
 	// accounts := routes.Group("github")
