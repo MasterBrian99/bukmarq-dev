@@ -37,7 +37,7 @@ func serveApplication() {
 
 	fContent := routes.Group("/folder")
 	{
-		fContent.GET("/list", middleware.JWTAuthMiddleware(), controller.GetFolderList)
+		//fContent.GET("/list", middleware.JWTAuthMiddleware(), controller.GetFolderList)
 		fContent.POST("/", middleware.JWTAuthMiddleware(), controller.CreateFolder)
 	}
 

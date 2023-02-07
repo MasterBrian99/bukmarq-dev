@@ -32,6 +32,10 @@ func CreateFolder(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"user": savedFolder})
 }
 
-func GetFolderList(context *gin.Context) {
-
-}
+//func GetFolderList(context *gin.Context) {
+//	a:=model.BookmarkFolders{
+//
+//	}
+//
+//	_, _ = model.BookmarkFolder.GetFolderList(a)
+//}
