@@ -27,7 +27,7 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-  @ApiCreatedResponse({ description: 'Created Succesfully' })
+  @ApiCreatedResponse({ description: 'Created Successfully' })
   @ApiOperation({ summary: 'Create new User' })
   @Post()
   async create(@Body() createAuthDto: CreateAuthDto) {

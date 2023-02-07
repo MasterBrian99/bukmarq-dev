@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { UserEntity } from '../entity/user.entity';
+import { UserEntity } from '../entity';
 import * as process from 'process';
 import ERROR_MESSAGES from '../common/error-messages';
 import { LoginAuthDto } from './dto/login-auth.dto';

@@ -1,6 +1,7 @@
 export enum STATUS {
-  INACTIVE,
-  ACTIVE,
+  ACTIVE="ACTIVE",
 
-  DELETED,
+  INACTIVE="INACTIVE",
+
+  DELETED="DELETED",
 }

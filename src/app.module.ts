@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { FolderModule } from './folder/folder.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       }),
     }),
     AuthModule,
+    FolderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
