@@ -38,8 +38,8 @@ export class AuthService {
       user.email = dto.email;
       const salt = await bcrypt.genSalt();
       user.password = await bcrypt.hash(dto.password, salt);
-      await this.userRepository.save(user);
-      const payload = { username: dto.username };
+      const savedUser = await this.userRepository.save(user);
+      const payload = { username: dto.username, id: savedUser.id };
       return {
         access_token: this.jwt.sign(payload, {
           secret: process.env.JWT_SECRET,
@@ -55,7 +55,12 @@ export class AuthService {
 
   async login(dto: LoginAuthDto) {
     try {
-      const payload = { username: dto.username };
+      const user = await this.userRepository.findOne({
+        where: {
+          username: dto.username,
+        },
+      });
+      const payload = { username: dto.username, id: user.id };
       return {
         access_token: this.jwt.sign(payload, {
           secret: process.env.JWT_SECRET,

@@ -8,17 +8,21 @@ import {
   TreeParent,
 } from 'typeorm';
 
-@Entity({ name: 'folder' })
+@Entity({ name: 'collection' })
 @Tree('materialized-path')
-export class FolderEntity extends BaseEntity {
+export class CollectionEntity extends BaseEntity {
   @Column({ name: 'name', type: 'varchar', length: '50', nullable: false })
   name: string;
 
-  @ManyToOne(() => FolderEntity, (folderEntity) => folderEntity.id, {
-    nullable: true,
-  })
+  @ManyToOne(
+    () => CollectionEntity,
+    (collectionEntity) => collectionEntity.id,
+    {
+      nullable: true,
+    },
+  )
   @TreeChildren()
-  children: FolderEntity[];
+  children: CollectionEntity[];
   @TreeParent()
-  parent: FolderEntity;
+  parent: CollectionEntity;
 }

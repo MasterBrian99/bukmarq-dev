@@ -5,7 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { FolderModule } from './folder/folder.module';
+import { CollectionModule } from './collection/collection.module';
+import { RequestContextModule } from 'nestjs-request-context';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { FolderModule } from './folder/folder.module';
       envFilePath: [`.env.${process.env.NODE_ENV}`],
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule, RequestContextModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         type: 'better-sqlite3',
@@ -25,7 +26,7 @@ import { FolderModule } from './folder/folder.module';
       }),
     }),
     AuthModule,
-    FolderModule,
+    CollectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

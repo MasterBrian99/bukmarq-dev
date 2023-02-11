@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateFolderDto {
+export class CreateCollectionDto {
   @ApiProperty({
     type: Number,
-    description: 'root folder id.must be 0 if it is root',
+    description: 'parent folder id.must be 0 if it is root',
   })
-  rootId: number;
+  parentId: number;
 
   @ApiProperty({ type: String, description: 'Folder Name' })
   name: string;
