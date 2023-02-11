@@ -1,20 +1,27 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { CreateCollectionDto } from './dto/create-collection.dto';
-import { CollectionEntity } from '../entity';
+import { CollectionEntity, UserEntity } from '../entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, IsNull, Repository } from 'typeorm';
 import { GetListCollectionDto } from './dto/get-list-collection.dto';
 import { GetCollectionDto } from './dto/get-collection.dto';
 import ERROR_MESSAGES from '../common/error-messages';
+import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 @Injectable()
 export class CollectionService {
+  private logger: Logger = new Logger(CollectionService.name);
+
   constructor(
     @InjectRepository(CollectionEntity)
     private readonly collectionRepository: Repository<CollectionEntity>,
     private readonly dataSource: DataSource,
   ) {}
-  async create(dto: CreateCollectionDto) {
+  async create(currentUser: UserEntity, dto: CreateCollectionDto) {
     try {
       const collection = new CollectionEntity();
       collection.name = dto.name;
@@ -22,6 +29,7 @@ export class CollectionService {
         const parentCollection = await this.collectionRepository.findOne({
           where: {
             id: dto.parentId,
+            createdBy: currentUser.id,
           },
         });
         if (parentCollection) {
@@ -44,22 +52,67 @@ export class CollectionService {
     return new GetListCollectionDto(treeList).getList();
   }
 
-  async findParentList() {
-    const treeList = await this.dataSource.manager
-      .getTreeRepository(CollectionEntity)
-      .findRoots();
-    return new GetListCollectionDto(treeList).getList();
+  async findParentList(currentUser: UserEntity) {
+    // const treeList = await this.dataSource.manager
+    //   .getTreeRepository(CollectionEntity)
+    //   .findRoots();
+    try {
+      const list = await this.collectionRepository.find({
+        where: {
+          parent: IsNull(),
+          createdBy: currentUser.id,
+        },
+      });
+      this.logger.log(list);
+      return new GetListCollectionDto(list).getList();
+    } catch (e) {
+      this.logger.error(e);
+      throw new InternalServerErrorException(
+        ERROR_MESSAGES.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  async findOneFromParent(id: number) {
-    const child = await this.collectionRepository.findOneOrFail({
-      where: {
-        id,
-      },
-      relations: ['children'],
-      select: ['children'],
-    });
+  async findOneFromParent(currentUser: UserEntity, id: number) {
+    try {
+      const child = await this.collectionRepository.findOneOrFail({
+        where: {
+          id,
+          createdBy: currentUser.id,
+        },
+        relations: ['children'],
+        select: ['children'],
+      });
+      if (child) {
+        return new GetCollectionDto(child).get();
+      }
+      return [];
+    } catch (e) {
+      this.logger.error(e);
+      throw new InternalServerErrorException(
+        ERROR_MESSAGES.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
-    return new GetCollectionDto(child).get();
+  async updateParent(dto: UpdateCollectionDto) {
+    // const collection=await this.collectionRepository.findOne()
+    try {
+      const parentCollection = await this.collectionRepository.findOne({
+        where: {
+          id: dto.parentId,
+        },
+      });
+
+      await this.collectionRepository.update(
+        { id: dto.collectionId },
+        { parent: { id: parentCollection.id } },
+      );
+    } catch (e) {
+      this.logger.error(e);
+      throw new InternalServerErrorException(
+        ERROR_MESSAGES.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

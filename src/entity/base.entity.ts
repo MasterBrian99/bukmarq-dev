@@ -39,7 +39,7 @@ export class BaseEntity {
     const req: any = RequestContext.currentContext.req;
     console.log(req.user);
     if (req.user) {
-      this.createdBy = req.user.userId;
+      this.createdBy = req.user.id;
     }
   }
 
@@ -49,7 +49,7 @@ export class BaseEntity {
     // this.updatedBy = getAuthenticatedUserId();
     const req: any = RequestContext.currentContext.req;
     if (req.user) {
-      this.updatedBy = req.user.userId;
+      this.updatedBy = req.user.id;
     }
   }
 }
