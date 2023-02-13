@@ -11,6 +11,7 @@ export class GetListCollectionDto {
     return this.list.map((elem) => ({
       id: elem.id,
       name: elem.name,
+      unified: elem.unified,
     }));
   }
 }

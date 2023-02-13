@@ -124,6 +124,23 @@ export class CollectionController {
       throw e;
     }
   }
+
+  @ApiOperation({
+    summary: 'Update collection emoji',
+  })
+  @ApiOkResponse({ description: 'Return Success' })
+  @Put('emoji')
+  async updateEmoji(@Body() updateCollectionDto: UpdateCollectionDto) {
+    try {
+      return new StandardResponse(
+        HttpStatus.OK,
+        SUCCESS_MESSAGES.SUCCESS,
+        await this.collectionService.updateEmoji(updateCollectionDto),
+      );
+    } catch (e) {
+      throw e;
+    }
+  }
   //
   // @Delete(':id')
   // remove(@Param('id') id: string) {

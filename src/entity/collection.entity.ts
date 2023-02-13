@@ -25,4 +25,7 @@ export class CollectionEntity extends BaseEntity {
   children: CollectionEntity[];
   @TreeParent()
   parent: CollectionEntity;
+
+  @Column({ name: 'unified', type: 'varchar', default: '1f423' })
+  unified: string;
 }

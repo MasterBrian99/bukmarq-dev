@@ -115,4 +115,18 @@ export class CollectionService {
       );
     }
   }
+
+  async updateEmoji(dto: UpdateCollectionDto) {
+    try {
+      await this.collectionRepository.update(
+        { id: dto.collectionId },
+        { unified: dto.unified },
+      );
+    } catch (e) {
+      this.logger.error(e);
+      throw new InternalServerErrorException(
+        ERROR_MESSAGES.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
