@@ -1,12 +1,11 @@
 package model
 
 import (
-	"html"
-	"strings"
-
-	"github.com/fletisco/bukmarq/database"
+	"github.com/MasterBrian99/bukmarq/database"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"html"
+	"strings"
 )
 
 type User struct {

@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/fletisco/bukmarq/middleware"
+	"github.com/MasterBrian99/bukmarq/controller"
+	"github.com/MasterBrian99/bukmarq/database"
+	"github.com/MasterBrian99/bukmarq/middleware"
+	"github.com/MasterBrian99/bukmarq/model"
 	"log"
 
-	"github.com/fletisco/bukmarq/controller"
-	"github.com/fletisco/bukmarq/database"
-	"github.com/fletisco/bukmarq/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +18,7 @@ func main() {
 }
 func loadDatabase() {
 	database.Connect()
-	err := database.Database.AutoMigrate(&model.User{}, &model.BookmarkFolder{})
+	err := database.Database.AutoMigrate(&model.User{}, &model.Collection{})
 	if err != nil {
 		log.Fatal("Database Migration Failed !")
 	}
@@ -35,16 +35,10 @@ func serveApplication() {
 		auth.GET("/test", middleware.JWTAuthMiddleware(), controller.TestAuthentication)
 	}
 
-	fContent := routes.Group("/folder")
+	collection := routes.Group("/collection")
 	{
-		//fContent.GET("/list", middleware.JWTAuthMiddleware(), controller.GetFolderList)
-		fContent.POST("/", middleware.JWTAuthMiddleware(), controller.CreateFolder)
+		collection.POST("/", middleware.JWTAuthMiddleware(), controller.CreateCollection)
 	}
-
-	// accounts := routes.Group("github")
-	// {
-	// 	accounts.POST("add", controller.AddNewAccount)
-	// }
 
 	err := r.Run(":9000")
 	if err != nil {

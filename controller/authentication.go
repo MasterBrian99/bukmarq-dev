@@ -1,10 +1,10 @@
 package controller
 
 import (
+	"github.com/MasterBrian99/bukmarq/helper"
+	"github.com/MasterBrian99/bukmarq/model"
 	"net/http"
 
-	"github.com/fletisco/bukmarq/helper"
-	"github.com/fletisco/bukmarq/model"
 	"github.com/gin-gonic/gin"
 )
 

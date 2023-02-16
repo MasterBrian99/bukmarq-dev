@@ -1,9 +1,9 @@
 package middleware
 
 import (
+	"github.com/MasterBrian99/bukmarq/helper"
 	"net/http"
 
-	"github.com/fletisco/bukmarq/helper"
 	"github.com/gin-gonic/gin"
 )
 
