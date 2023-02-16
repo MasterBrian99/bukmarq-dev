@@ -106,7 +106,7 @@ export class CollectionService {
 
       await this.collectionRepository.update(
         { id: dto.collectionId },
-        { parent: { id: parentCollection.id } },
+        { parent: { id: parentCollection ? parentCollection.id : null } },
       );
     } catch (e) {
       this.logger.error(e);
