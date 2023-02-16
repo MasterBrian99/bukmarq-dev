@@ -2,9 +2,8 @@ package config
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/joho/godotenv"
+	"os"
 )
 
 // Config func to get env value

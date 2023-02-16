@@ -10,6 +10,7 @@ type Collection struct {
 	Name string `gorm:"size:255;not null" json:"name"`
 	//SubCollection []*Collection `gorm:"many2many:sub_collection;constraint:OnDelete:CASCADE"`
 	ParentId uint `gorm:"default:null" json:"parent_id"`
+	UserID   uint `json:"user_id"`
 }
 
 func (collection *Collection) Save() (*Collection, error) {
@@ -24,9 +25,31 @@ func (collection *Collection) Save() (*Collection, error) {
 func (collection *Collection) FindById(id int) (Collection, error) {
 
 	var coll Collection
-	err := database.Database.Where("id=?", id).Find(&coll).Error
+	err := database.Database.Where("id=?", id).Find(&coll).Limit(1).Error
 	if err != nil {
 		return Collection{}, err
 	}
 	return coll, nil
 }
+
+type CollectionList struct {
+	ID       uint
+	Name     string
+	ParentId uint
+}
+
+func GetAllCollectionByParentID(id int, userID uint) ([]CollectionList, error) {
+
+	var collectionList []CollectionList
+
+	err := database.Database.Model(&Collection{}).Where("parent_id=?", id).Where("user_id=?", userID).Find(&collectionList).Error
+
+	if err != nil {
+		return []CollectionList{}, err
+	}
+	return collectionList, nil
+}
+
+//func (collection *Collection) UpdateCollectionName() error {
+//
+//}

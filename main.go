@@ -38,6 +38,7 @@ func serveApplication() {
 	collection := routes.Group("/collection")
 	{
 		collection.POST("/", middleware.JWTAuthMiddleware(), controller.CreateCollection)
+		collection.GET("/parent/:id", middleware.JWTAuthMiddleware(), controller.GetAllCollectionByParentID)
 	}
 
 	err := r.Run(":9000")
