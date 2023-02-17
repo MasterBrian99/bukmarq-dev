@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"github.com/MasterBrian99/bukmarq/controller"
 	"github.com/MasterBrian99/bukmarq/database"
+	docs "github.com/MasterBrian99/bukmarq/docs"
 	"github.com/MasterBrian99/bukmarq/middleware"
 	"github.com/MasterBrian99/bukmarq/model"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -25,7 +28,7 @@ func loadDatabase() {
 }
 
 func serveApplication() {
-
+	docs.SwaggerInfo.BasePath = "/api"
 	r := gin.Default()
 	routes := r.Group("/api")
 	auth := routes.Group("/auth")
@@ -40,7 +43,7 @@ func serveApplication() {
 		collection.POST("/", middleware.JWTAuthMiddleware(), controller.CreateCollection)
 		collection.GET("/parent/:id", middleware.JWTAuthMiddleware(), controller.GetAllCollectionByParentID)
 	}
-
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	err := r.Run(":9000")
 	if err != nil {
 		return
