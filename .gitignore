@@ -3,3 +3,5 @@ bukmarq_db
 .idea/
 
 bukmarq_dev*
+
+/frontend/node_modules/*

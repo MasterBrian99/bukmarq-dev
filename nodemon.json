@@ -1,6 +1,7 @@
 {
     "ignore": [
         "*bukmarq_db",
-        "**/fixtures/**"
+        "**/fixtures/**",
+        "frontend/**"
     ]
 }

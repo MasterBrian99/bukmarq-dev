@@ -7,6 +7,7 @@ import (
 	docs "github.com/MasterBrian99/bukmarq/docs"
 	"github.com/MasterBrian99/bukmarq/middleware"
 	"github.com/MasterBrian99/bukmarq/model"
+	"github.com/gin-contrib/cors"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
@@ -30,6 +31,7 @@ func loadDatabase() {
 func serveApplication() {
 	docs.SwaggerInfo.BasePath = "/api"
 	r := gin.Default()
+	r.Use(cors.Default())
 	routes := r.Group("/api")
 	auth := routes.Group("/auth")
 	{
