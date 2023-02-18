@@ -11,6 +11,7 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,11 +32,17 @@ func loadDatabase() {
 func serveApplication() {
 	docs.SwaggerInfo.BasePath = "/api"
 	r := gin.Default()
-	r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
+		AllowHeaders:     []string{"Authorization", "Origin", "Content-Length", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+		AllowAllOrigins:  true,
+	}))
 	routes := r.Group("/api")
 	auth := routes.Group("/auth")
 	{
-		auth.POST("/", controller.Register)
+		auth.POST("", controller.Register)
 		auth.POST("/login", controller.Login)
 		auth.GET("/test", middleware.JWTAuthMiddleware(), controller.TestAuthentication)
 	}
