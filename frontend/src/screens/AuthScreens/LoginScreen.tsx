@@ -9,11 +9,12 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useMutation } from '@tanstack/react-query';
+import { useSignIn } from 'react-auth-kit';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { loginUser } from '../../api/auth';
 import { CustomErrorResponse } from '../../http/httpClient';
-
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: 900,
@@ -50,6 +51,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function LoginScreen() {
+  const navigate = useNavigate();
+  const signIn = useSignIn();
   const form = useForm({
     initialValues: {
       username: '',
@@ -57,8 +60,20 @@ export default function LoginScreen() {
     },
   });
   const loginMutation = useMutation(loginUser, {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (res) => {
+      console.log(res);
+      if (
+        signIn({
+          token: res.jwt,
+          expiresIn: 600,
+          tokenType: 'Bearer',
+          authState: res,
+        })
+      ) {
+        // Redirect or do-something
+        navigate('/', { replace: true });
+        location.reload();
+      }
     },
     onError: (err: CustomErrorResponse) => {
       console.log(err.message);
@@ -99,9 +114,9 @@ export default function LoginScreen() {
           </Button>
         </form>
         <Text align="center" mt="md">
-          Don&apos;t have an account?{' '}
-          <Anchor<'a'> href="#" weight={700} onClick={(event) => event.preventDefault()}>
-            Login
+          Don&apos;t have an account ?{' '}
+          <Anchor<'button'> weight={700} onClick={() => navigate('../register')}>
+            Register
           </Anchor>
         </Text>
       </Paper>

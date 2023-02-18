@@ -1,21 +1,17 @@
 import {
-  ActionIcon,
   AppShell,
   Badge,
   Code,
   createStyles,
-  Group,
   Navbar,
-  ScrollArea,
   Text,
   TextInput,
-  Tooltip,
   UnstyledButton,
 } from '@mantine/core';
-import { IoIosAdd, IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowForward } from 'react-icons/io';
 import { Outlet } from 'react-router-dom';
 
-import CollectionItem from '../../components/Collection/CollectionItem/CollectionItem';
+import NavigationCollection from '../../components/Navigation/NavigationCollection/NavigationCollection';
 
 const links = [
   { icon: IoIosArrowForward, label: 'Activity', notifications: 3 },
@@ -23,43 +19,6 @@ const links = [
   { icon: IoIosArrowForward, label: 'Contacts' },
 ];
 
-const collections = [
-  { emoji: '👍', label: 'Sales' },
-  { emoji: '🚚', label: 'Deliveries' },
-  { emoji: '💸', label: 'Discounts' },
-  { emoji: '💰', label: 'Profits' },
-  { emoji: '✨', label: 'Reports' },
-  { emoji: '🛒', label: 'Orders' },
-  { emoji: '📅', label: 'Events' },
-  { emoji: '🙈', label: 'Debts' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-];
 export default function MainLayout() {
   const { classes } = useStyles();
   const mainLinks = links.map((link) => (
@@ -76,9 +35,6 @@ export default function MainLayout() {
     </UnstyledButton>
   ));
 
-  const collectionLinks = collections.map((collection, id) => (
-    <CollectionItem key={id} id={id} name={collection.label} />
-  ));
   return (
     <AppShell
       className={classes.shell}
@@ -104,19 +60,7 @@ export default function MainLayout() {
             <div className={classes.mainLinks}>{mainLinks}</div>
           </Navbar.Section>
 
-          <Navbar.Section className={`${classes.section}`} grow component={ScrollArea}>
-            <Group className={classes.collectionsHeader} position="apart">
-              <Text size="xs" weight={500} color="dimmed">
-                Collections
-              </Text>
-              <Tooltip label="Create collection" withArrow position="right">
-                <ActionIcon variant="default" size={18}>
-                  <IoIosAdd size={12} stroke={'1.5'} />
-                </ActionIcon>
-              </Tooltip>
-            </Group>
-            <div className={classes.collections}>{collectionLinks}</div>
-          </Navbar.Section>
+          <NavigationCollection />
         </Navbar>
       }
     >

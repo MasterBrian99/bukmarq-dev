@@ -49,7 +49,7 @@ func serveApplication() {
 
 	collection := routes.Group("/collection")
 	{
-		collection.POST("/", middleware.JWTAuthMiddleware(), controller.CreateCollection)
+		collection.POST("", middleware.JWTAuthMiddleware(), controller.CreateCollection)
 		collection.GET("/parent/:id", middleware.JWTAuthMiddleware(), controller.GetAllCollectionByParentID)
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

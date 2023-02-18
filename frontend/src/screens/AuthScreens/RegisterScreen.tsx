@@ -9,7 +9,8 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { registerUser } from '../../api/auth';
 import { CustomErrorResponse } from '../../http/httpClient';
@@ -50,6 +51,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function RegisterScreen() {
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       username: '',
@@ -76,7 +78,7 @@ export default function RegisterScreen() {
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         <Title order={2} className={classes.title} align="center" mt="md" mb={50}>
-          Welcome back to Bukmarq
+          Welcome to Bukmarq
         </Title>
         <form onSubmit={form.onSubmit(() => submitRegisterUser())}>
           <TextInput
@@ -99,9 +101,9 @@ export default function RegisterScreen() {
           </Button>
         </form>
         <Text align="center" mt="md">
-          Don&apos;t have an account?{' '}
-          <Anchor<'a'> href="#" weight={700} onClick={(event) => event.preventDefault()}>
-            Register
+          Already have an account ?{' '}
+          <Anchor<'button'> weight={700} onClick={() => navigate('../login')}>
+            Login
           </Anchor>
         </Text>
       </Paper>

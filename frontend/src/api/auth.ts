@@ -1,4 +1,4 @@
-import { AuthRequestI } from '../dto/auth.dto';
+import { AuthLoginResponseI, AuthRequestI } from '../dto/auth.dto';
 import httpClient from '../http/httpClient';
 
 export const registerUser = async (data: AuthRequestI): Promise<string> => {
@@ -6,9 +6,9 @@ export const registerUser = async (data: AuthRequestI): Promise<string> => {
   return res.data as string;
 };
 
-export const loginUser = async (data: AuthRequestI): Promise<string> => {
+export const loginUser = async (data: AuthRequestI): Promise<AuthLoginResponseI> => {
   const res = await httpClient.post('auth/login', data);
-  return res.data as string;
+  return res.data as AuthLoginResponseI;
 };
 
 // export const removeEnrolmentStudent = async (params: {

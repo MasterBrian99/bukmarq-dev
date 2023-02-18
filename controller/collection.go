@@ -67,7 +67,7 @@ func GetAllCollectionByParentID(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{"data": all})
+	context.JSON(http.StatusOK, gin.H{"message": "success", "data": all})
 }
 
 type UpdateCollectionInput struct {
