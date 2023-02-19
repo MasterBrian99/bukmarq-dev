@@ -124,7 +124,7 @@ const CollectionItem = (prop: Prop) => {
               </Menu.Item>
               <Menu.Item icon={<BiMove size={14} />}>Move to root</Menu.Item>
 
-              <CollectionRename />
+              <CollectionRename id={prop.id} name={prop.name} parent={prop.parentID} />
             </Menu.Dropdown>
           </Menu>
         </Box>
