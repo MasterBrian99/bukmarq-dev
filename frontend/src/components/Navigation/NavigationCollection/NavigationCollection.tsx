@@ -1,5 +1,4 @@
 import {
-  ActionIcon,
   Box,
   createStyles,
   Group,
@@ -10,7 +9,6 @@ import {
   Tooltip,
 } from '@mantine/core';
 import React, { useState } from 'react';
-import { IoIosAdd } from 'react-icons/io';
 import { useQuery } from 'react-query';
 
 import { getCollectionByParentID } from '../../../api/collection';
@@ -18,6 +16,7 @@ import {
   CollectionResponseDataI,
   CollectionResponseI,
 } from '../../../dto/collection.dto';
+import CollectionCreate from '../../Collection/CollectionItem/CollectionCreate/CollectionCreate';
 import CollectionItem from '../../Collection/CollectionItem/CollectionItem';
 
 const useStyles = createStyles((theme) => ({
@@ -65,9 +64,9 @@ const NavigationCollection = () => {
           Collections
         </Text>
         <Tooltip label="Create collection" withArrow position="right">
-          <ActionIcon variant="default" size={18}>
-            <IoIosAdd size={12} stroke={'1.5'} />
-          </ActionIcon>
+          <span>
+            <CollectionCreate />
+          </span>
         </Tooltip>
       </Group>
       <div className={classes.collections}>
