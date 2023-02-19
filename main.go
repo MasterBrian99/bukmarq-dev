@@ -51,6 +51,7 @@ func serveApplication() {
 	{
 		collection.POST("", middleware.JWTAuthMiddleware(), controller.CreateCollection)
 		collection.GET("/parent/:id", middleware.JWTAuthMiddleware(), controller.GetAllCollectionByParentID)
+		collection.PUT("", middleware.JWTAuthMiddleware(), controller.UpdateCollection)
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	err := r.Run(":9000")

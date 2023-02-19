@@ -1,19 +1,14 @@
 info:
   contact: {}
 paths:
-  /example/helloworld:
-    get:
+  /collection/:
+    post:
       consumes:
       - application/json
-      description: do ping
       produces:
       - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-      summary: ping example
+      responses: {}
+      summary: create new collection
       tags:
-      - example
+      - collection
 swagger: "2.0"

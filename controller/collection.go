@@ -14,6 +14,12 @@ type CreateCollectionInput struct {
 	ParentId int    `json:"parent" `
 }
 
+// CreateCollection godoc
+// @Summary      create new collection
+// @Tags         collection
+// @Accept       json
+// @Produce      json
+// @Router       /collection/ [post]
 func CreateCollection(context *gin.Context) {
 	var input CreateCollectionInput
 	var collection model.Collection
@@ -37,6 +43,7 @@ func CreateCollection(context *gin.Context) {
 		collection.ParentId = parent.ID
 
 	}
+	fmt.Printf("%+v\n", collection)
 	_, err = collection.Save()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -72,25 +79,75 @@ func GetAllCollectionByParentID(context *gin.Context) {
 
 type UpdateCollectionInput struct {
 	ID       int    `json:"id" binding:"required"`
-	Name     string `json:"name"  binding:"min=1,max=50"`
+	Name     string `json:"name"`
 	ParentId int    `json:"parent"`
+	Type     int    `json:"type" binding:"required"`
 }
 
-func UpdateCollectionName(context *gin.Context) {
+func UpdateCollection(context *gin.Context) {
 	var input UpdateCollectionInput
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	collection := model.Collection{}
-	collection, err := collection.FindById(input.ID)
+
+	user, err := helper.CurrentUser(context)
 	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	}
+
+	if input.Type == 1 {
+		println("Update Collection ")
+		_, err := UpdateCollectionName(user, &input)
+		if err != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+	if input.Type == 2 {
+		_, err2 := UpdateCollectionParent(user, &input)
+		if err2 != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "success !"})
+
+}
+
+func UpdateCollectionName(user model.User, input *UpdateCollectionInput) (*model.Collection, error) {
+	collection, err := model.FindByCurrentUserAndID(input.ID, user.ID)
+	if err != nil {
+		return nil, err
 	}
 	collection.Name = input.Name
-	_, err = collection.Save()
+
+	err = collection.UpdateCollection()
 	if err != nil {
-		return
+		return nil, err
 	}
+
+	return nil, nil
+}
+
+func UpdateCollectionParent(user model.User, input *UpdateCollectionInput) (*model.Collection, error) {
+	collection, err := model.FindByCurrentUserAndID(input.ID, user.ID)
+	if err != nil {
+		return nil, err
+	}
+	parent, err := model.FindByCurrentUserAndID(input.ParentId, user.ID)
+	if err != nil {
+		return nil, err
+	}
+	collection.ParentId = parent.ID
+
+	err = collection.UpdateCollection()
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, nil
 }
