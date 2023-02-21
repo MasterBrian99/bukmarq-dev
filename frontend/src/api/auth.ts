@@ -3,6 +3,8 @@ import httpClient from '../http/httpClient';
 
 export const registerUser = async (data: AuthRequestI): Promise<string> => {
   const res = await httpClient.post('auth', data);
+  console.log(res.config.url);
+  
   return res.data as string;
 };
 

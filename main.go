@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/MasterBrian99/bukmarq/controller"
 	"github.com/MasterBrian99/bukmarq/database"
 	docs "github.com/MasterBrian99/bukmarq/docs"
 	"github.com/MasterBrian99/bukmarq/middleware"
 	"github.com/MasterBrian99/bukmarq/model"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/contrib/static"
+	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"log"
-	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -32,6 +33,7 @@ func loadDatabase() {
 func serveApplication() {
 	docs.SwaggerInfo.BasePath = "/api"
 	r := gin.Default()
+	r.Use(static.Serve("/", static.LocalFile("./dist", true)))
 	r.Use(cors.New(cors.Config{
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
 		AllowHeaders:     []string{"Authorization", "Origin", "Content-Length", "Content-Type"},

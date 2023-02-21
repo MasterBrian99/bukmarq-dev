@@ -1,6 +1,8 @@
 bukmarq_db
 .env
 .idea/
+dist/
+bin/
 
 bukmarq_dev*
 

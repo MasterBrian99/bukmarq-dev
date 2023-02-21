@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "880c577d-43f1-4d38-a57b-c0db5bffdd4b",
+    "colId": "f1eabb76-831c-455a-8c28-cae60d4997ba",
+    "containerId": "6aa21409-1869-4aaf-aa9a-c9c1983f5981",
+    "name": "Create New User",
+    "url": "{{base_url}}auth",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-02-21T15:29:14.100Z",
+    "modified": "2023-02-21T16:40:16.288Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\":\"bareiad112n1\",\n  \"password\":\"1234\"\n  \n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "201"
+      }
+    ]
+  }
+]

@@ -2,8 +2,10 @@ import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
 
 const axiosInstance = axios.create();
 
+console.log(process.env.NODE_ENV);
+
 axiosInstance.defaults.baseURL =
-  process.env.NODE_ENV == 'development' ? 'http://localhost:9000/api/' : '';
+  process.env.NODE_ENV == 'development' ? '/api/' : '/api/';
 
 axiosInstance.interceptors.request.use(function (config) {
   const token = window.localStorage.getItem('_auth');
