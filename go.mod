@@ -1,4 +1,4 @@
-module github.com/MasterBrian99/bukmarq
+module github.com/MasterBrian99/bukmarq-dev
 
 go 1.19
 

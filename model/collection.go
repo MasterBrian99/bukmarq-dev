@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/MasterBrian99/bukmarq/database"
+	"github.com/MasterBrian99/bukmarq-dev/database"
 	"gorm.io/gorm"
 )
 

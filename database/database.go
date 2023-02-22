@@ -2,7 +2,8 @@ package database
 
 import (
 	"fmt"
-	"github.com/MasterBrian99/bukmarq/config"
+
+	"github.com/MasterBrian99/bukmarq-dev/config"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

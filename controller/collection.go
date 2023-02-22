@@ -2,11 +2,12 @@ package controller
 
 import (
 	"fmt"
-	"github.com/MasterBrian99/bukmarq/helper"
-	"github.com/MasterBrian99/bukmarq/model"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/MasterBrian99/bukmarq-dev/helper"
+	"github.com/MasterBrian99/bukmarq-dev/model"
+	"github.com/gin-gonic/gin"
 )
 
 type CreateCollectionInput struct {

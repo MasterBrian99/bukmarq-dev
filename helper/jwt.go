@@ -3,11 +3,12 @@ package helper
 import (
 	"errors"
 	"fmt"
-	"github.com/MasterBrian99/bukmarq/config"
-	"github.com/MasterBrian99/bukmarq/model"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/MasterBrian99/bukmarq-dev/config"
+	"github.com/MasterBrian99/bukmarq-dev/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
