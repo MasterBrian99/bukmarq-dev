@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "f1eabb76-831c-455a-8c28-cae60d4997ba",
+    "colName": "bukmarq-api",
+    "created": "2023-02-21T15:26:18.396Z",
+    "sortNum": 20000,
+    "folders": [
+      {
+        "_id": "6aa21409-1869-4aaf-aa9a-c9c1983f5981",
+        "name": "auth",
+        "containerId": "",
+        "created": "2023-02-21T15:28:59.295Z",
+        "sortNum": 10000
+      }
+    ]
+  }
+]

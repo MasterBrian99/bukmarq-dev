@@ -1,0 +1,8 @@
+{
+    "ignore": [
+        "*bukmarq_db",
+        "**/fixtures/**",
+        "frontend/**",
+        "thunder-tests/**"
+    ]
+}

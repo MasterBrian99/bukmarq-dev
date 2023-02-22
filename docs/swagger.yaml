@@ -1,0 +1,14 @@
+info:
+  contact: {}
+paths:
+  /collection/:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses: {}
+      summary: create new collection
+      tags:
+      - collection
+swagger: "2.0"
